@@ -46,12 +46,37 @@
         font-weight: 400;
         font-display: swap;
       }
+
+      /* Shown until React mounts and replaces #root content */
+      .initial-loader {
+        display: flex;
+        justify-content: center;
+        padding-top: 15%;
+      }
+      .initial-loader > div {
+        width: 80px;
+        height: 80px;
+        box-sizing: border-box;
+        border: 10px solid #4C4CFF;
+        border-bottom-color: #FFFFFF;
+        border-radius: 50%;
+        animation: initial-loader-spin 1.3s linear infinite;
+      }
+      @media (prefers-color-scheme: dark) {
+        body { background-color: #171A1C; }
+        .initial-loader > div { border-bottom-color: #171A1C; }
+      }
+      @keyframes initial-loader-spin {
+        to { transform: rotate(360deg); }
+      }
     </style>
   </head>
 
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="initial-loader" role="progressbar"><div></div></div>
+    </div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-param([ValidateSet('start','stop','status','logs','update')][string]$Action = 'start')
+param([ValidateSet('start','stop','status','logs','update','build')][string]$Action = 'start')
 
 $compose = Join-Path $PSScriptRoot 'docker-compose.yml'
 
@@ -22,5 +22,6 @@ switch ($Action) {
     'stop'   { docker compose -f $compose down }
     'status' { docker compose -f $compose ps }
     'logs'   { docker compose -f $compose logs -f kafka-ui }
-    'update' { docker compose -f $compose pull; docker compose -f $compose up -d }
+    'update' { docker compose -f $compose pull --ignore-buildable; docker compose -f $compose up -d }
+    'build'  { docker compose -f $compose build kafka-ui; docker compose -f $compose up -d }
 }

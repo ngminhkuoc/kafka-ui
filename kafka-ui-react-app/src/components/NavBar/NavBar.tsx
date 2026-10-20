@@ -8,6 +8,7 @@ import AutoIcon from 'components/common/Icons/AutoIcon';
 import SunIcon from 'components/common/Icons/SunIcon';
 import MoonIcon from 'components/common/Icons/MoonIcon';
 import { ThemeModeContext } from 'components/contexts/ThemeModeContext';
+import { GIT_REPO_LINK } from 'lib/constants';
 
 import UserInfo from './UserInfo/UserInfo';
 import * as S from './NavBar.styled';
@@ -85,7 +86,7 @@ const NavBar: React.FC<Props> = ({ onBurgerClick }) => {
           isThemeMode
         />
         <S.SocialLink
-          href="https://github.com/provectus/kafka-ui"
+          href={GIT_REPO_LINK}
           target="_blank"
         >
           <GitIcon />

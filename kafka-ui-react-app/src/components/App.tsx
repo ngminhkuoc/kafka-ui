@@ -48,9 +48,9 @@ const App: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <GlobalSettingsProvider>
-        <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
-          <Suspense fallback={<PageLoader />}>
+      <ThemeProvider theme={isDarkMode ? darkTheme : theme}>
+        <Suspense fallback={<PageLoader />}>
+          <GlobalSettingsProvider>
             <UserInfoRolesAccessProvider>
               <ConfirmContextProvider>
                 <GlobalCSS />
@@ -90,9 +90,9 @@ const App: React.FC = () => {
                 <ConfirmationModal />
               </ConfirmContextProvider>
             </UserInfoRolesAccessProvider>
-          </Suspense>
-        </ThemeProvider>
-      </GlobalSettingsProvider>
+          </GlobalSettingsProvider>
+        </Suspense>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 };

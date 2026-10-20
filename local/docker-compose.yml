@@ -2,7 +2,10 @@ name: kafka-ui
 
 services:
   kafka-ui:
-    image: provectuslabs/kafka-ui:latest
+    image: kafka-ui:local   # built from this repo's source by local/Dockerfile
+    build:
+      context: ..
+      dockerfile: local/Dockerfile
     container_name: kafka-ui
     restart: unless-stopped
     ports:

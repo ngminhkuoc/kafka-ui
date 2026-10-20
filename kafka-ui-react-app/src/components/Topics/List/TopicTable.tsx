@@ -8,16 +8,18 @@ import { useSearchParams } from 'react-router-dom';
 import ClusterContext from 'components/contexts/ClusterContext';
 import { useTopics } from 'lib/hooks/api/topics';
 import { PER_PAGE } from 'lib/constants';
+import Spinner from 'components/common/Spinner/Spinner';
 
 import { TopicTitleCell } from './TopicTitleCell';
 import ActionsCell from './ActionsCell';
 import BatchActionsbar from './BatchActionsBar';
+import * as S from './TopicTable.styled';
 
 const TopicTable: React.FC = () => {
   const { clusterName } = useAppParams<{ clusterName: ClusterName }>();
   const [searchParams] = useSearchParams();
   const { isReadOnly } = React.useContext(ClusterContext);
-  const { data } = useTopics({
+  const { data, isFetching } = useTopics({
     clusterName,
     page: Number(searchParams.get('page') || 1),
     perPage: Number(searchParams.get('perPage') || PER_PAGE),
@@ -95,18 +97,25 @@ const TopicTable: React.FC = () => {
   );
 
   return (
-    <Table
-      data={topics}
-      pageCount={pageCount}
-      columns={columns}
-      enableSorting
-      serverSideProcessing
-      batchActionsBar={BatchActionsbar}
-      enableRowSelection={
-        !isReadOnly ? (row) => !row.original.internal : undefined
-      }
-      emptyMessage="No topics found"
-    />
+    <S.Wrapper $isFetching={isFetching}>
+      <Table
+        data={topics}
+        pageCount={pageCount}
+        columns={columns}
+        enableSorting
+        serverSideProcessing
+        batchActionsBar={BatchActionsbar}
+        enableRowSelection={
+          !isReadOnly ? (row) => !row.original.internal : undefined
+        }
+        emptyMessage="No topics found"
+      />
+      {isFetching && (
+        <S.Overlay>
+          <Spinner size={40} borderWidth={5} />
+        </S.Overlay>
+      )}
+    </S.Wrapper>
   );
 };
 
