@@ -105,6 +105,13 @@ export const transformFormDataToPayload = (data: ClusterConfigFormValues) => {
     ...transformCustomProps(data.customAuth),
   };
 
+  // Plain SSL (no SASL). An auth method below overrides security.protocol.
+  if (data.useSsl) {
+    config.properties['security.protocol'] = 'SSL';
+  } else if (config.properties['security.protocol'] === 'SSL') {
+    delete config.properties['security.protocol'];
+  }
+
   // Authentication
   if (data.auth) {
     const { method, props, securityProtocol, keystore } = data.auth;

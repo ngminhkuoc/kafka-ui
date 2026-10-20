@@ -101,6 +101,8 @@ export const getInitialFormData = (
 
   const properties = payload.properties || {};
 
+  initialValues.useSsl = properties['security.protocol'] === 'SSL';
+
   // Authentification
   initialValues.customAuth = {};
 

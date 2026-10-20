@@ -38,6 +38,7 @@ export type ClusterConfigFormValues = {
   name: string;
   readOnly: boolean;
   bootstrapServers: BootstrapServer[];
+  useSsl?: boolean;
   truststore?: {
     location: string;
     password: string;

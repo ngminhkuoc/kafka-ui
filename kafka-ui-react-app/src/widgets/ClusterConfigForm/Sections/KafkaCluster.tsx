@@ -100,6 +100,11 @@ const KafkaCluster: React.FC = () => {
           </div>
         </S.GroupFieldWrapper>
       </div>
+      <Checkbox
+        name="useSsl"
+        label="Use SSL"
+        hint="connect to the brokers over SSL (security.protocol=SSL). For SASL, pick SASL_SSL in Authentication instead"
+      />
       <hr />
       <SectionHeader
         title="Truststore"
