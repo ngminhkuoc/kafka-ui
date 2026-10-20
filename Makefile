@@ -1,4 +1,4 @@
-# Run Kafka UI locally from the prebuilt Docker image (no compile needed).
+# Run Kafka UI locally in Docker, built from this repo's source (no local Java needed).
 # Stack definition: local/docker-compose.yml
 
 COMPOSE := docker compose -f local/docker-compose.yml
@@ -8,16 +8,17 @@ ifeq ($(OS),Windows_NT)
   PS := powershell -NoProfile -ExecutionPolicy Bypass -File local/kafka-ui.ps1
 endif
 
-.PHONY: help start stop restart status logs update open
+.PHONY: help start stop restart build status logs update open
 
 help:
 	@echo Targets:
 	@echo   make start    - start Docker if needed, run Kafka + Kafka UI, open the browser
 	@echo   make stop     - stop and remove the containers (Kafka data is kept)
 	@echo   make restart  - stop then start
+	@echo   make build    - rebuild Kafka UI from source and recreate (slow, run after code changes)
 	@echo   make status   - show container status
 	@echo   make logs     - follow Kafka UI logs
-	@echo   make update   - pull the latest images and recreate
+	@echo   make update   - pull the latest Kafka image and recreate
 	@echo   make open     - open $(URL) in the browser
 
 ifeq ($(OS),Windows_NT)
@@ -40,6 +41,10 @@ stop:
 
 restart: stop start
 
+build:
+	$(COMPOSE) build kafka-ui
+	$(COMPOSE) up -d
+
 status:
 	$(COMPOSE) ps
 
@@ -47,5 +52,5 @@ logs:
 	$(COMPOSE) logs -f kafka-ui
 
 update:
-	$(COMPOSE) pull
+	$(COMPOSE) pull --ignore-buildable
 	$(COMPOSE) up -d

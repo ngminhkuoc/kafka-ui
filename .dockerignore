@@ -1,0 +1,7 @@
+**/node_modules
+**/target
+**/build
+.vs
+.idea
+local/config
+kafka-ui-react-app/src/generated-sources

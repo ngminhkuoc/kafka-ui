@@ -45,3 +45,4 @@ build/
 
 # Local run (make start) dynamic config, may contain credentials
 local/config/
+/.vs
