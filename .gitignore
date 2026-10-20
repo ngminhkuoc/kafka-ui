@@ -42,3 +42,6 @@ build/
 *.tgz
 
 /docker/*.override.yaml
+
+# Local run (make start) dynamic config, may contain credentials
+local/config/

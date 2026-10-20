@@ -93,6 +93,32 @@ Then access the web UI at [http://localhost:8080](http://localhost:8080)
 
 The command is sufficient to try things out. When you're done trying things out, you can proceed with a [persistent installation](https://docs.kafka-ui.provectus.io/quick-start/persistent-start)
 
+## Local run with make (no build)
+
+The repo includes a ready-made local stack in [`local/`](local): Kafka UI from the prebuilt `provectuslabs/kafka-ui` image plus a single-node Kafka broker (KRaft, no ZooKeeper). Nothing is compiled.
+
+Prerequisites: Docker (Docker Desktop on Windows/macOS) and GNU Make.
+
+```
+make start    # start Docker if needed, run Kafka + Kafka UI, open the browser
+make stop     # stop and remove the containers (Kafka data is kept)
+make status   # show container status
+make logs     # follow Kafka UI logs
+make update   # pull the latest images and recreate
+make help     # list all targets
+```
+
+| Service  | Address                                        |
+|----------|------------------------------------------------|
+| Kafka UI | [http://localhost:8080](http://localhost:8080) |
+| Kafka    | `localhost:9092` (from your machine), `kafka:29092` (inside Docker) |
+
+Notes:
+- The containers use `restart: unless-stopped`, so they come back whenever Docker starts.
+- Dynamic config is enabled: clusters you add in the UI are saved to `local/config/` (git-ignored, as it may hold credentials).
+- On Windows without make, run the launcher directly: `powershell -ExecutionPolicy Bypass -File local\kafka-ui.ps1 start` (also `stop`, `status`, `logs`, `update`).
+- This runs the published image, not your local changes. To test code changes, see [Building from sources](#building-from-sources).
+
 ## Persistent installation
 
 ```
